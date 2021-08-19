@@ -19,44 +19,62 @@ class Visitors:
     print("****** first & last 3 years dataframe ******")
     #print(dataframe2.drop(['Periods'], axis=1))
     dataframe3 = dataframe2[(dataframe2['Year'] >= 1988) & (dataframe2['Year'] <= 1997)]
-    print(dataframe3)
+    #print(dataframe3)
     print(dataframe3.head(3))
     print(dataframe3.tail(3))
 
-#dataframe4 = dataframe3[[ 'Belgium & Luxembourg', 'Denmark', 'Finland', 'France', 'Germany',
-       #'Italy', 'Netherlands', 'Norway', 'Rep Of Ireland',
-       #'Russian Federation', 'Spain', 'Sweden', 'Switzerland',
-       #'United Kingdom']]
-
-dataframe4 = dataframe3[['Belgium & Luxembourg', 'Denmark', 'Finland', 'France', 'Germany',
+    dataframe4 = dataframe3[['Belgium & Luxembourg', 'Denmark', 'Finland', 'France', 'Germany',
                         'Italy', 'Netherlands', 'Norway', 'Rep Of Ireland',
                         'Russian Federation', 'Spain', 'Sweden', 'Switzerland',
                         'United Kingdom']]
 
-print('****** dataframe4 *********')
-print(dataframe4)
+    print('****** dataframe4 ******')
+    print(dataframe4)
 
-print('******** sorted ******')
+    print('****** sorted ******')
 
-dataframe5 = dataframe4.replace(',', '', regex=True)
-dataframe6 = dataframe5.replace('na', '0', regex=True)
-print('******** dataframe5 ******')
-print(dataframe6)
+    dataframe5 = dataframe4.replace(',', '', regex=True)
+    dataframe6 = dataframe5.replace('na', '0', regex=True)
+    print('****** dataframe5 ******')
+    print(dataframe6)
 
-dataframe7 = dataframe6.astype(int)
-print(dataframe7.dtypes)
-psNotSorted=dataframe7.sum()
-psSorted = dataframe7.sum().sort_values(ascending=False)
-print('******** sorted ******')
-print(psSorted)
+    dataframe7 = dataframe6.astype(int)
+    print(dataframe7.dtypes)
+    psNotSorted=dataframe7.sum()
+    psSorted = dataframe7.sum().sort_values(ascending=False)
+    print('****** sorted ******')
+    print(psSorted)
 
-allCountries = psNotSorted
-print('****** Top 3 countries ********')
+    allCountries = psNotSorted
+    print('****** Top 3 countries ******')
 
-top3countries = psSorted.head(3)
-print(top3countries)
-total=top3countries.values.sum()
-mean=round(top3countries.values.mean(),2)
+    top3countries = psSorted.head(3)
+    print(top3countries)
+    total=top3countries.values.sum()
+    mean=round(top3countries.values.mean(),2)
 
-print("The total no. of visitors for the top 3 countries is ",total)
-print("The mean value for the top 3 countries is ",mean)
+    print("The total no. of visitors for the top 3 countries is ",total)
+    print("The mean value for the top 3 countries is ",mean)
+
+
+    # plot the figure
+    index = np.arange(len(top3countries.index))
+    print(index)
+    indexAll = np.arange(len(allCountries.index))
+    print(indexAll)
+    plt.figure(figsize=(10, 10))
+    plt.xlabel('Countries', fontsize=8)
+    plt.ylabel('No. of Travellers (in thousands)', fontsize=8)
+    plt.xticks(index, top3countries.index, fontsize=6, rotation=30)
+    plt.title('Top 3 Europe Countries from (Period:1988-1997)')
+    plt.show()
+
+    # plot all countries
+    plt.figure(figsize=(10, 10))
+    plt.xlabel('Countries', fontsize=8)
+    plt.ylabel('No. of Travellers (in thousands)', fontsize=8)
+    plt.title('plt.title('All Europe Countries from(Period:1988-1997)')')
+    plt.xticks(indexAll, allCountries.index, fontsize=6, rotation=90)
+
+    plt.bar(allCountries.index, allCountries.values/1000)
+    plt.show()
